@@ -36,12 +36,12 @@ CREATE TABLE IF NOT EXISTS cançoes(
 );
 
 CREATE TABLE IF NOT EXISTS historico_de_reproduçoes(
-    CONSTRAINT PRIMARY KEY(usuario_id, cançoes_id),
     usuario_id INT NOT NULL,
-    FOREIGN KEY(usuario_id) REFERENCES usuarios(usuario_id),
     cançoes_id INT NOT NULL,
-    FOREIGN KEY(cançoes_id) REFERENCES cançoes(cançoes_id)
-    data_hora DATETIME NOT NULL,    
+    data_hora DATETIME NOT NULL,
+    CONSTRAINT PRIMARY KEY(usuario_id, cançoes_id),
+    FOREIGN KEY(usuario_id) REFERENCES usuarios(usuario_id),
+    FOREIGN KEY(cançoes_id) REFERENCES cançoes(cançoes_id)        
 );
 
 -- CREATE TABLE IF NOT EXISTS idades(
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS usuarios(
     plano_id INT NOT NULL,
     data_assinatura DATE NOT NULL,
     FOREIGN KEY(plano_id) REFERENCES planos(plano_id),
-    FOREIGN KEY(idade_id) REFERENCES idades(idade_id),
+    FOREIGN KEY(idade_id) REFERENCES idades(idade_id)
 );
 
 CREATE TABLE IF NOT EXISTS seguidores(
@@ -150,7 +150,7 @@ INSERT INTO cançoes(nome_cançoes, album_id, duracao_segundos) VALUES
 ('Baby',10 ,136),
 ('You Make Me Feel So..',10 ,83);
 
-INSERT INTO historico(usuario_id, cançoes_id, data_hora) VALUES
+INSERT INTO historico_de_reproduçoes(usuario_id, cançoes_id, data_hora) VALUES
 (1,36, '2020-02-28 10:45:55'),
 (1,25, '2020-05-02 05:30:35'),
 (1,23, '2020-03-06 11:22:33'),
