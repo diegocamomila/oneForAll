@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS seguidores(
 );
 
 
-INSERT INTO planos(plani_tipo, plano_valor) VALUES
+INSERT INTO planos(plano_tipo, plano_valor) VALUES
 ('gratuito',0.00),
 ('universitário',5.99),
 ('pessoal',6.99),
