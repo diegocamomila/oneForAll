@@ -213,3 +213,4 @@ INSERT INTO seguidores(usuario_id, artista_id) VALUES
 (9,3),
 (10,2),
 (10,6);
+// 
