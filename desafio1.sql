@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS historico_de_reproduçoes(
 -- );
 
 CREATE TABLE IF NOT EXISTS usuarios(
-	id_usuario INT PRIMARY KEY AUTO_INCREMENT,
+	usuario_id INT PRIMARY KEY AUTO_INCREMENT,
     nome_usuario VARCHAR(45) NOT NULL,
     idade_usuario INT NOT NULL,
     plano_id INT NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS usuarios(
 CREATE TABLE IF NOT EXISTS seguidores(
     usuario_id INT NOT NULL,
     artista_id INT NOT NULL,
-    CONSTRAINT PRIMARY KEY(id_usuario, id_artista),
+    CONSTRAINT PRIMARY KEY(usuario_id, artista_id),
     FOREIGN KEY(usuario_id) REFERENCES usuarios(usuario_id),
     FOREIGN KEY(artista_id) REFERENCES artistas(artista_id)
 );
@@ -176,7 +176,7 @@ INSERT INTO historico_de_reproduçoes(usuario_id, cançoes_id, data_hora) VALUES
 (6,22, '2018-05-29 14:56:41'),
 (7,5, '2018-05-09 22:30:49'),
 (7,4, '2020-07-27 12:52:58'),
-(7,1, '2018-01-16 18:40:43'),
+(7,11, '2018-01-16 18:40:43'),
 (8,39, '2018-03-21 16:56:40'),
 (8,40, '2020-10-18 13:38:05'),
 (8,32, '2019-05-25 08:14:03'),
