@@ -3,8 +3,8 @@ USE SpotifyClone;
 
 CREATE TABLE IF NOT EXISTS planos(
 	plano_id INT PRIMARY KEY AUTO_INCREMENT,
-    plano_tipo VARCHAR(30) NOT NULL,
-    plano_valor DECIMAL(3,2) NOT NULL 
+    tipo VARCHAR(30) NOT NULL,
+    valor DECIMAL(3,2) NOT NULL 
 );
 
 -- CREATE TABLE IF NOT EXISTS data_assinatura(
@@ -13,6 +13,14 @@ CREATE TABLE IF NOT EXISTS planos(
 --     plano_id INT NOT NULL
 --     FOREIGN KEY(plano_id) REFERENCES planos(plano_id)
 -- );
+CREATE TABLE IF NOT EXISTS usuarios(
+	usuario_id INT PRIMARY KEY AUTO_INCREMENT,
+    nome_usuario VARCHAR(45) NOT NULL,
+    idade_usuario INT NOT NULL,
+    plano_id INT NOT NULL,
+    data_assinatura DATE NOT NULL,
+    FOREIGN KEY(plano_id) REFERENCES planos(plano_id)
+);
 
 CREATE TABLE IF NOT EXISTS artistas(
 	artista_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -27,21 +35,21 @@ CREATE TABLE IF NOT EXISTS albuns(
     FOREIGN KEY(artista_id) REFERENCES artistas(artista_id)
 );
 
-CREATE TABLE IF NOT EXISTS cançoes(
-	cançoes_id INT PRIMARY KEY AUTO_INCREMENT,
-    nome_cançoes VARCHAR(45) NOT NULL,
+CREATE TABLE IF NOT EXISTS musicas(
+	musicas_id INT PRIMARY KEY AUTO_INCREMENT,
+    nome_musica VARCHAR(45) NOT NULL,
     duracao_segundos INT NOT NULL,
     album_id INT NOT NULL,    
     FOREIGN KEY(album_id) REFERENCES albuns(album_id)
 );
 
-CREATE TABLE IF NOT EXISTS historico_de_reproduçoes(
+CREATE TABLE IF NOT EXISTS historico(
     usuario_id INT NOT NULL,
-    cançoes_id INT NOT NULL,
+    musica_id INT NOT NULL,
     data_hora DATETIME NOT NULL,
-    CONSTRAINT PRIMARY KEY(usuario_id, cançoes_id),
+    CONSTRAINT PRIMARY KEY(usuario_id, musica_id),
     FOREIGN KEY(usuario_id) REFERENCES usuarios(usuario_id),
-    FOREIGN KEY(cançoes_id) REFERENCES cançoes(cançoes_id)        
+    FOREIGN KEY(musica_id) REFERENCES musicas(musica_id)        
 );
 
 -- CREATE TABLE IF NOT EXISTS idades(
@@ -49,15 +57,7 @@ CREATE TABLE IF NOT EXISTS historico_de_reproduçoes(
 --     idade_usuario INT NOT NULL
 -- );
 
-CREATE TABLE IF NOT EXISTS usuarios(
-	usuario_id INT PRIMARY KEY AUTO_INCREMENT,
-    nome_usuario VARCHAR(45) NOT NULL,
-    idade_usuario INT NOT NULL,
-    plano_id INT NOT NULL,
-    data_assinatura DATE NOT NULL,
-    FOREIGN KEY(plano_id) REFERENCES planos(plano_id),
-    FOREIGN KEY(idade_id) REFERENCES idades(idade_id)
-);
+
 
 CREATE TABLE IF NOT EXISTS seguidores(
     usuario_id INT NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS seguidores(
 );
 
 
-INSERT INTO planos(plano_tipo, plano_valor) VALUES
+INSERT INTO planos(tipo, valor) VALUES
 ('gratuito',0.00),
 ('universitário',5.99),
 ('pessoal',6.99),
@@ -84,7 +84,7 @@ INSERT INTO artistas(nome_artista) VALUES
 ('Fog');
 
 
-INSERT INTO usuarios(nome_usuario, idade_usuario, planos, data_assinatura) VALUES
+INSERT INTO usuarios(nome_usuario, idade_usuario, plano_id, data_assinatura) VALUES
 ('Thati', 23, 1, '2019-10-20'),
 ('Cintia',35, 4,'2017-12-30'),
 ('Bill',20,2, '2019-06-05'),
@@ -150,7 +150,7 @@ INSERT INTO cançoes(nome_cançoes, album_id, duracao_segundos) VALUES
 ('Baby',10 ,136),
 ('You Make Me Feel So..',10 ,83);
 
-INSERT INTO historico_de_reproduçoes(usuario_id, cançoes_id, data_hora) VALUES
+INSERT INTO historico(usuario_id, musica_id, data_hora) VALUES
 (1,36, '2020-02-28 10:45:55'),
 (1,25, '2020-05-02 05:30:35'),
 (1,23, '2020-03-06 11:22:33'),
