@@ -1,7 +1,9 @@
-CREATE DATABASE IF NOT EXISTS SpotifyClone;
+drop database if exists SpotifyClone;
+
+CREATE DATABASE  SpotifyClone;
 USE SpotifyClone;
 
-CREATE TABLE IF NOT EXISTS planos(
+CREATE TABLE  planos(
 	plano_id INT PRIMARY KEY AUTO_INCREMENT,
     tipo VARCHAR(30) NOT NULL,
     valor DECIMAL(3,2) NOT NULL 
@@ -13,7 +15,7 @@ CREATE TABLE IF NOT EXISTS planos(
 --     plano_id INT NOT NULL
 --     FOREIGN KEY(plano_id) REFERENCES planos(plano_id)
 -- );
-CREATE TABLE IF NOT EXISTS usuarios(
+CREATE TABLE usuarios(
 	usuario_id INT PRIMARY KEY AUTO_INCREMENT,
     nome_usuario VARCHAR(45) NOT NULL,
     idade_usuario INT NOT NULL,
@@ -22,12 +24,12 @@ CREATE TABLE IF NOT EXISTS usuarios(
     FOREIGN KEY(plano_id) REFERENCES planos(plano_id)
 );
 
-CREATE TABLE IF NOT EXISTS artistas(
+CREATE TABLE artistas(
 	artista_id INT PRIMARY KEY AUTO_INCREMENT,
     nome_artista VARCHAR(45) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS albuns(
+CREATE TABLE albuns(
 	album_id INT PRIMARY KEY AUTO_INCREMENT,
     nome_album VARCHAR(45) NOT NULL,
     ano_lancamento YEAR NOT NULL,
@@ -35,21 +37,29 @@ CREATE TABLE IF NOT EXISTS albuns(
     FOREIGN KEY(artista_id) REFERENCES artistas(artista_id)
 );
 
-CREATE TABLE IF NOT EXISTS musicas(
-	musicas_id INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE musicas(
+	musica_id INT PRIMARY KEY AUTO_INCREMENT,
     nome_musica VARCHAR(45) NOT NULL,
     duracao_segundos INT NOT NULL,
     album_id INT NOT NULL,    
     FOREIGN KEY(album_id) REFERENCES albuns(album_id)
 );
 
-CREATE TABLE IF NOT EXISTS historico(
+CREATE TABLE seguidores(
     usuario_id INT NOT NULL,
-    musica_id INT NOT NULL,
-    data_hora DATETIME NOT NULL,
-    CONSTRAINT PRIMARY KEY(usuario_id, musica_id),
+    artista_id INT NOT NULL,
+    CONSTRAINT PRIMARY KEY(usuario_id, artista_id),
     FOREIGN KEY(usuario_id) REFERENCES usuarios(usuario_id),
-    FOREIGN KEY(musica_id) REFERENCES musicas(musica_id)        
+    FOREIGN KEY(artista_id) REFERENCES artistas(artista_id)
+);
+
+CREATE TABLE historico(
+usuario_id INT NOT NULL,
+musica_id INT NOT NULL,
+data_hora DATETIME NOT NULL,
+CONSTRAINT PRIMARY KEY(usuario_id, musica_id),
+FOREIGN KEY(usuario_id) REFERENCES usuarios(usuario_id),
+FOREIGN KEY(musica_id) REFERENCES musicas(musica_id)    
 );
 
 -- CREATE TABLE IF NOT EXISTS idades(
@@ -58,14 +68,6 @@ CREATE TABLE IF NOT EXISTS historico(
 -- );
 
 
-
-CREATE TABLE IF NOT EXISTS seguidores(
-    usuario_id INT NOT NULL,
-    artista_id INT NOT NULL,
-    CONSTRAINT PRIMARY KEY(usuario_id, artista_id),
-    FOREIGN KEY(usuario_id) REFERENCES usuarios(usuario_id),
-    FOREIGN KEY(artista_id) REFERENCES artistas(artista_id)
-);
 
 
 INSERT INTO planos(tipo, valor) VALUES
@@ -108,7 +110,7 @@ INSERT INTO albuns(nome_album, artista_id, ano_lancamento) VALUES
 ('No guarantees',5, '2015'),
 ('Apparatus',6, '2015');
 
-INSERT INTO cançoes(nome_cançoes, album_id, duracao_segundos) VALUES
+INSERT INTO musicas (nome_musica, album_id, duracao_segundos) VALUES
 ('Soul For Us',1 ,200),
 ('Reflections Of Magic',1 ,163),
 ('Dance With Her Own',1 ,116),
