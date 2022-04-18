@@ -5,4 +5,4 @@ SELECT
 FROM SpotifyClone.usuarios as usuarios
 JOIN SpotifyClone.historico as historico ON historico.usuario_id = usuarios.usuario_id
 JOIN SpotifyClone.musicas as musicas ON musicas.musica_id = historico.musica_id
-GROUP BY usuarios.nome;
+GROUP BY usuarios.nome_nome;
